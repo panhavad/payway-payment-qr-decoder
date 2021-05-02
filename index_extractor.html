@@ -1,0 +1,39 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="description" content="" />
+    <meta name="author" content="Panhavad" />
+    <meta name="keywords" content="" />
+ 
+    <title>Payway QR info extractor</title>
+    <link rel="stylesheet" href="src/css/style.css"></link>
+    <script type="text/javascript" src="src/js/extractor.js"></script>
+</head>
+
+
+<body>
+
+    <div class="articleHeadLine">
+        Payway QR info extractor
+    </div>
+    <br>
+
+    <h2>Input QR value</h2>
+    <input type="text" id="inputDataTextArea" size="200" /><br />
+       
+    <br />
+    <!-- submit here -->
+    <button id="calcButton" onclick="extractClick();">Start Extract</button>
+
+    <br />
+    <br />
+
+    <label style="font-weight:bold">Result CRC value: </label>
+    <label id="resultLabel" style="font-weight:bold"><span style="color:red">-</span> </label>
+    <br /><br />
+    <hr>
+<br>
+</body>
+</html>
