@@ -23,12 +23,12 @@
                 <p class="lead">This will require you to put the text that got from your payment QR. Note that that text have to be <b>0.1$</b> QR.<br> So that the system acuratly extract the information.</p>
             </div>
       <div class="mx-5">
-        <form id="qr-form" class="card p-2 my-3" onsubmit="extractData()">
+        <form class="card p-2 my-3">
           <div class="input-group">
-            <input type="text" class="form-control" value="00020101021252040000530384054030.15802KH5919first.vend by P.DUK6010Phnom Penh622005070393198070585517992000020368101619515246630445CC" placeholder="00020101021252040000530384054030.15802KH5919first.vend by P.DUK6010Phnom Penh622005070393198070585517992000020368101619515246630445CC">
+            <input id="qr-text" type="text" class="form-control" value="00020101021252040000530384054030.15802KH5919first.vend by P.DUK6010Phnom Penh622005070393198070585517992000020368101619515246630445CC" placeholder="00020101021252040000530384054030.15802KH5919first.vend by P.DUK6010Phnom Penh622005070393198070585517992000020368101619515246630445CC">
             <!-- @todo make execute button functional
             @body id the input so that execute function can take the value to process -->
-            <button type="submit" class="btn btn-primary">Execute</button>
+            <a onclick="extractData()" class="btn btn-primary">Execute</a>
           </div>
         </form>
 
