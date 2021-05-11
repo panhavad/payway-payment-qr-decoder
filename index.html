@@ -23,9 +23,9 @@
                 <p class="lead">This will require you to put the text that got from your payment QR. Note that that text have to be <b>0.1$</b> QR.<br> So that the system acuratly extract the information.</p>
             </div>
       <div class="mx-5">
-        <form class="card p-2 my-3">
+        <form id="qr-form" class="card p-2 my-3" onsubmit="extractData()">
           <div class="input-group">
-            <input type="text" class="form-control" placeholder="00020101021252040000530384054030.15802KH5919first.vend by P.DUK6010Phnom Penh622005070393198070585517992000020368101619515246630445CC">
+            <input type="text" class="form-control" value="00020101021252040000530384054030.15802KH5919first.vend by P.DUK6010Phnom Penh622005070393198070585517992000020368101619515246630445CC" placeholder="00020101021252040000530384054030.15802KH5919first.vend by P.DUK6010Phnom Penh622005070393198070585517992000020368101619515246630445CC">
             <!-- @todo make execute button functional
             @body id the input so that execute function can take the value to process -->
             <button type="submit" class="btn btn-primary">Execute</button>
@@ -49,7 +49,7 @@
               <h6 class="my-0">1.Number of Characters</h6>
               <small class="text-muted">Denote the requested amount's character</small>
             </div>
-            <span class="text-muted">Lurem Isum</span>
+            <span id="num-of-chars" class="text-muted">Lurem Isum</span>
           </li>
           <li class="list-group-item d-flex justify-content-between lh-sm">
             <div>

@@ -1,6 +1,9 @@
 // @todo function to handle the submited data
 // @body handling the string, split anything to refine the string then input the next function
-
+function extractData() {
+	let form = document.getElementById("qr-form");
+	let number_of_chars = document.getElementById("num-of-chars")
+}
 
 
 // @todo handling epoch
