@@ -6,12 +6,13 @@ function extractData() {
 	var input_str = document.getElementById("qr-text").value;
 	if (input_str) { //check if user input value
 		if (input_str.includes("000201010212520400005303")) {//make sure that it is payway qr (marker)
+			var ext_res_arr = []
 			var current_work_str = input_str.replace("000201010212520400005303840540", "")//this is the code that mark as a valid payway qr, just remove that i dont need that
 
 			//they allow on 50000.00 per transaction so mean that number of digit can be at most 8 (only one char)
 			let MARK_AMOUNT_LEN = 1
 			var ext_amount_len = parseInt(current_work_str.substring(0, MARK_AMOUNT_LEN)) //there will be no issue on this, dont for get to parse to int too because it was str when i get it
-			
+
 			let MARK_AMOUNT = ext_amount_len + 1 //because of substring function i have add the end param with 1 to get correct value
 			var ext_amount_tobe_transac = current_work_str.substring(MARK_AMOUNT_LEN, MARK_AMOUNT)
 			
@@ -23,8 +24,6 @@ function extractData() {
 
 			//remove half string for ease of work
 			current_work_str = current_work_str.replace(current_work_str.substring(0, MARK_VENDOR_NAME)+" by ", "")
-
-			console.log(current_work_str)
 
 			let MARK_LINKED_USER = current_work_str.indexOf("6")
 			var ext_linked_user = current_work_str.substring(0, MARK_LINKED_USER)//start work on new string will be 0
@@ -48,17 +47,45 @@ function extractData() {
 
 			let MARK_CRC_ALGO = MARK_CRC_HEX - 4
 			var ext_crc_algo_indicator = current_work_str.substring(MARK_CRC_ALGO, MARK_CRC_HEX) // -4 because i know 4 char after the hex is the crc id they use
+			// if (ext_crc_algo_indicator == "6304") {
+			// 	ext_crc_algo_indicator = "CRC16_CCITT_FALSE"
+			// }
 			//this result in 6304 with mean they using crc id 63 also known as CRC16_CCITT_FALSE
 			//and 04 is the indicator that after this algo idicator there will be 4 more card to get related to crc result
 
 			let MARK_EPOCH = MARK_CRC_ALGO - 10 //because epoch len is 10 char
-			var ext_epoch = current_work_str.substring(MARK_EPOCH, MARK_CRC_ALGO) //this is the time that generate the QR, this make QR unique even everything else is the same
+			console.log(current_work_str.substring(MARK_EPOCH, MARK_CRC_ALGO))
+			var ext_epoch = epochToJsDate(parseInt(current_work_str.substring(MARK_EPOCH, MARK_CRC_ALGO))) //this is the time that generate the QR, this make QR unique even everything else is the same
+			
+			ext_res_arr = [ext_amount_len, ext_amount_tobe_transac, ext_vendor_name, ext_linked_user, ext_vendor_loc, ext_epoch, ext_crc_algo_indicator, ext_crc_hex]
 
-			console.log(ext_epoch)
+			replaceDisplayValExtracted(ext_res_arr)
 		}
 	}
 }
 
+function replaceDisplayValExtracted(ext_res_arr) {
+	var amount_chars_elem = document.getElementById("amountChars")
+	var amount_elem = document.getElementById("amount")
+	var vendor_name_elem = document.getElementById("vendorName")
+	var link_username_elem = document.getElementById("linkUsername")
+	var vendor_location_elem = document.getElementById("vendorLocation")
+	var gen_time_elem = document.getElementById("genTime")
+	var algo_used_elem = document.getElementById("algoUsed")
+	var valid_hex_elem = document.getElementById("validHex")
+
+	var elem_arr = [amount_chars_elem, amount_elem, vendor_name_elem, link_username_elem, vendor_location_elem, gen_time_elem, algo_used_elem, valid_hex_elem]
+
+	elem_arr.map((elem_val, index) => {
+		elem_val.textContent = ext_res_arr[index]
+	});
+}
+
+function epochToJsDate(ts){
+	// ts = epoch timestamp
+	// returns date obj
+	return new Date(ts*1000);
+}
 // @todo handling epoch
 // @body convert the epch to time and make sure it can be concate to html, this might have to deal with string
 

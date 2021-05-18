@@ -1,31 +1,35 @@
-
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <meta name="description" content="" />
-    <meta name="author" content="Panhavad" />
-    <meta name="keywords" content="" />
- 
-    <title>Payway QR info extractor</title>
-    <link rel="stylesheet" href="src/css/style.css"></link>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
-    <script type="text/javascript" src="src/js/extractor.js"></script>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="description" content="" />
+  <meta name="author" content="Panhavad" />
+  <meta name="keywords" content="" />
+
+  <title>Payway QR info extractor</title>
+  <link rel="stylesheet" href="src/css/style.css">
+  </link>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
+  <script type="text/javascript" src="src/js/extractor.js"></script>
 </head>
 
 
 <body class="bg-light">
-    <div class="container">
-        <main>
-            <div class="py-5 text-center">
-                <img class="d-block mx-auto mb-4" src="https://i.ibb.co/4MwD0hP/7-JLVA-removebg-preview-1.png" height="150px">
-                <h2>Payway QR Extraction</h2>
-                <p class="lead">This will require you to put the text that got from your payment QR. Note that that text have to be <b>0.1$</b> QR.<br> So that the system acuratly extract the information.</p>
-            </div>
+  <div class="container">
+    <main>
+      <div class="py-5 text-center">
+        <!-- <img class="d-block mx-auto mb-4" src="https://i.ibb.co/4MwD0hP/7-JLVA-removebg-preview-1.png" height="150px"> -->
+        <h2>Payway QR Extraction</h2>
+        <p class="lead">This will require you to put the text that got from your payment QR.<br> This will extract information from that QR to an understandable information.</p>
+      </div>
       <div class="mx-5">
         <form class="card p-2 my-3">
           <div class="input-group">
-            <input id="qr-text" type="text" class="form-control" value="00020101021252040000530384054030.15802KH5919first.vend by P.DUK6010Phnom Penh622005070393198070585517992000020368101619515246630445CC" placeholder="00020101021252040000530384054030.15802KH5919first.vend by P.DUK6010Phnom Penh622005070393198070585517992000020368101619515246630445CC">
+            <input id="qr-text" type="text" class="form-control"
+              value="00020101021252040000530384054031005802KH5919MY.STORE by P.DAD6010Phnom Penh622005070393198070585517992000020368101619515246630445CC"
+              placeholder="00020101021252040000530384054031005802KH5919MY.STORE by P.DAD6010Phnom Penh622005070393198070585517992000020368101619515246630445CC">
             <!-- @todo make execute button functional
             @body id the input so that execute function can take the value to process -->
             <a onclick="extractData()" class="btn btn-primary">Execute</a>
@@ -34,29 +38,31 @@
 
         <h4 class="d-flex justify-content-between align-items-center mb-3">
           <span class="text-primary">Extracted Info</span>
-          <span class="badge rounded-pill bg-success">Success</span>
+          <!-- <span class="badge rounded-pill bg-success">Success</span> -->
           <!-- <span class="badge rounded-pill bg-warning text-dark">Fail</span> -->
         </h4>
 
-<!-- extracted info section -->
-       <!-- 
+        <!-- extracted info section -->
+        <!-- 
           @todo adding id to div
           @body should adding id to the tag with value which we going to replace and remove it when process
           -->
         <ul class="list-group mb-3">
           <li class="list-group-item d-flex justify-content-between lh-sm">
             <div>
-              <h6 class="my-0">1.Number of Characters</h6>
-              <small class="text-muted">Denote the requested amount's character</small>
+              <h6 class="my-0">1.Lenght of Amount (chars)</h6>
+              <small class="text-muted">Denote the requested amount's characters</small>
             </div>
-            <span id="num-of-chars" class="text-muted">Lurem Isum</span>
+            <div><span class="fw-bolder fs-5" id="amountChars">-</span><span class="text-muted fw-bolder fs-5">
+                Character(s)</span></div>
           </li>
           <li class="list-group-item d-flex justify-content-between lh-sm">
             <div>
               <h6 class="my-0">2.Amount to Request</h6>
-              <small class="text-muted">Exact amount of money that will request for.    </small>
+              <small class="text-muted">Exact amount of money that will request for. </small>
             </div>
-            <span class="text-muted">Lurem Isum</span>
+            <div><span class="fw-bolder fs-5" id="amount">- </span><span class="text-muted fw-bolder fs-5"> $</span>
+            </div>
           </li>
 
           <li class="list-group-item d-flex justify-content-between lh-sm">
@@ -64,50 +70,53 @@
               <h6 class="my-0">3.Vendor Name</h6>
               <small class="text-muted">Name of the store that bill will pay too..</small>
             </div>
-            <span class="text-muted">Lurem Isum</span>
+            <span class="fw-bolder fs-5" id="vendorName">-</span>
           </li>
           <li class="list-group-item d-flex justify-content-between lh-sm">
             <div>
               <h6 class="my-0">4.Linked User (Short)</h6>
               <small class="text-muted">Store owner account (short name) that linked to vendor.</small>
             </div>
-            <span class="text-muted">Lurem Isum</span>
+            <span class="fw-bolder fs-5" id="linkUsername">-</span>
           </li>
           <li class="list-group-item d-flex justify-content-between lh-sm">
             <div>
               <h6 class="my-0">5.Vendor Location</h6>
               <small class="text-muted">Location that the vendor is register.</small>
             </div>
-            <span class="text-muted">Lurem Isum</span>
+            <span class="fw-bolder fs-5" id="vendorLocation">-</span>
           </li>
           <li class="list-group-item d-flex justify-content-between lh-sm">
             <div>
-              <h6 class="my-0">6.QR Generated Time (UTC+7)</h6>
+              <h6 class="my-0">6.QR Generated Time</h6>
               <small class="text-muted">Time that generated the QR was generated, epoch value.</small>
             </div>
-            <span class="text-muted">Lurem Isum</span>
+            <span class="fw-bolder fs-5" id="genTime">-</span>
           </li>
           <li class="list-group-item d-flex justify-content-between lh-sm">
             <div>
               <h6 class="my-0">7.Validation Algorithm</h6>
               <small class="text-muted">The algorithm that use to validate this string value.</small>
             </div>
-            <span class="text-muted">Lurem Isum</span>
+            <span class="fw-bolder fs-5" id="algoUsed">-</span>
           </li>
           <li class="list-group-item d-flex justify-content-between lh-sm">
             <div>
-              <h6 class="my-0">8.Validated Checksum</h6>
+              <h6 class="my-0">8.Validated Hex</h6>
               <small class="text-muted">The value that will validate the data in front.</small>
             </div>
-            <span class="text-muted">Lurem Isum</span>
+            <span class="fw-bolder fs-5" id="validHex">-</span>
           </li>
         </ul>
-<!-- extract info end -->
-        
+        <!-- extract info end -->
+
       </div>
-        </main>
-    </div>
-    
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8" crossorigin="anonymous"></script>
+    </main>
+  </div>
+  <script type="text/javascript" src="src/js/moment.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8"
+    crossorigin="anonymous"></script>
 </body>
+
 </html>
