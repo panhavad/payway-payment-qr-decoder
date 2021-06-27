@@ -1,0 +1,9 @@
+#loadingMessage {
+    text-align: center;
+    padding: 40px;
+    background-color: #eee;
+  }
+  #canvas {
+    width: 25%;
+    margin-left: 37.5%;
+  }

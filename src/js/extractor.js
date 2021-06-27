@@ -2,12 +2,13 @@
 // @body handling the string, split anything to refine the string then input the next function
 function extractData() {
 	let num_amount_chars = document.getElementById("num-of-chars")
+	var amount_chars_elem = document.getElementById("outputMessage")
 
 	var input_str = document.getElementById("qr-text").value;
 	if (input_str) { //check if user input value
-		if (input_str.includes("000201010212520400005303")) {//make sure that it is payway qr (marker)
+		if (input_str.includes("0002010102125204")) {//make sure that it is payway qr (marker)
 			var ext_res_arr = []
-			var current_work_str = input_str.replace("000201010212520400005303840540", "")//this is the code that mark as a valid payway qr, just remove that i dont need that
+			var current_work_str = input_str.replace(input_str.substring(0,24)+"840540", "")//this is the code that mark as a valid payway qr, just remove that i dont need that
 
 			//they allow on 50000.00 per transaction so mean that number of digit can be at most 8 (only one char)
 			let MARK_AMOUNT_LEN = 1
@@ -60,6 +61,10 @@ function extractData() {
 			ext_res_arr = [ext_amount_len, ext_amount_tobe_transac, ext_vendor_name, ext_linked_user, ext_vendor_loc, ext_epoch, ext_crc_algo_indicator, ext_crc_hex]
 
 			replaceDisplayValExtracted(ext_res_arr)
+			amount_chars_elem.hidden = true;
+		}
+		else {
+			amount_chars_elem.hidden = false;
 		}
 	}
 }
